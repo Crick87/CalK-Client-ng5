@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #424242;
+  color: rgba(255, 255, 255, 0.85);
+  padding-top: 2%;
+  height: 100vh;
+  font-family: 'Roboto Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
