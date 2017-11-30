@@ -2,76 +2,101 @@
   <!-- <h1 class="text-center">Calk</h1> -->
     <div class="col-md-8 col-md-offset-2 calculator" align="center">
       <div class="row displayBox">
-        <p class="displayFunc text-left" id="functionName">{{ functionName }}</p>
-        <p class="displayText" id="display">{{ display }}</p>
+        <p class="displayMode" id="functionMode">{{ mode }}</p>
+        <p class="displayFunc text-left" id="functionName">{{ functionName | titlecase }}</p>
+        <div style="clear: both;"></div>
+        <p class="displayText" id="display">{{ display | number:".0-6"}}</p>
+        <p class="displayHelp" id="displayHelp">{{ displayHelp }}</p>
       </div>
 
       <div class="row numberPad">
 
         <div class="col-sm-5">
           <div class="row">
-            <button class="btn clear hvr-back-pulse" id="clear">C</button>
-            <button class="btn btn-calc hvr-radial-out" id="square">x<sup>2</sup></button>
-            <button class="btn btn-calc hvr-radial-out" id="sqrt">√</button>
+            <button class="btn clear hvr-back-pulse waves-effect waves-light" id="clear" (click)="Clear()">C</button>
+            <button class="btn btn-calc hvr-radial-out" id="square" (click)="functionName='cuadrado'">x<sup>2</sup></button>
+            <button class="btn btn-calc hvr-radial-out" id="back" (click)="display=display.slice(0, -1)">←</button>
           </div>
           <div class="row">
-            <button class="btn btn-calc hvr-radial-out" id="seven">7</button>
-            <button class="btn btn-calc hvr-radial-out" id="eight">8</button>
-            <button class="btn btn-calc hvr-radial-out" id="nine">9</button>
+            <button class="btn btn-calc hvr-radial-out" id="seven" (click)="Display(7)">7</button>
+            <button class="btn btn-calc hvr-radial-out" id="eight" (click)="Display(8)">8</button>
+            <button class="btn btn-calc hvr-radial-out" id="nine" (click)="Display(9)">9</button>
           </div>
           <div class="row">
-            <button class="btn btn-calc hvr-radial-out" id="four">4</button>
-            <button class="btn btn-calc hvr-radial-out" id="five">5</button>
-            <button class="btn btn-calc hvr-radial-out" id="six">6</button>
+            <button class="btn btn-calc hvr-radial-out" id="four" (click)="Display(4)">4</button>
+            <button class="btn btn-calc hvr-radial-out" id="five" (click)="Display(5)">5</button>
+            <button class="btn btn-calc hvr-radial-out" id="six" (click)="Display(6)">6</button>
           </div>
           <div class="row">
-            <button class="btn btn-calc hvr-radial-out" id="one">1</button>
-            <button class="btn btn-calc hvr-radial-out" id="two">2</button>
-            <button class="btn btn-calc hvr-radial-out" id="three">3</button>
+            <button class="btn btn-calc hvr-radial-out" id="one" (click)="Display(1)">1</button>
+            <button class="btn btn-calc hvr-radial-out" id="two" (click)="Display(2)">2</button>
+            <button class="btn btn-calc hvr-radial-out" id="three" (click)="Display(3)">3</button>
           </div>
           <div class="row">
-            <button class="btn btn-calc hvr-radial-out" id="plus_minus">&#177;</button>
-            <button class="btn btn-calc hvr-radial-out" id="zero">0</button>
-            <button class="btn btn-calc hvr-radial-out" id="decimal">.</button>
+            <button class="btn btn-calc hvr-radial-out" id="plus_minus" (click)="CambiarSigno()">&#177;</button>
+            <button class="btn btn-calc hvr-radial-out" id="zero" (click)="Display(0)">0</button>
+            <button class="btn btn-calc hvr-radial-out" id="decimal" (click)="Display('.')">.</button>
           </div>
         </div>
         <div class="col-sm-2 operationSide">
-          <button id="divide" class="btn btn-operation hvr-fade">÷</button>
-          <button id="multiply" class="btn btn-operation hvr-fade">×</button>
-          <button id="subtract" class="btn btn-operation hvr-fade">−</button>
-          <button id="add" class="btn btn-operation hvr-fade">+</button>
-          <button id="equals" class="btn btn-operation equals hvr-back-pulse">=</button>
+          <button id="divide" class="btn btn-operation hvr-fade" (click)="SetDivision()">÷</button>
+          <button id="multiply" class="btn btn-operation hvr-fade" (click)="SetMultiplicacion()">×</button>
+          <button id="subtract" class="btn btn-operation hvr-fade" (click)="SetResta()">−</button>
+          <button id="add" class="btn btn-operation hvr-fade" (click)="SetSuma()">+</button>
+          <button id="equals" class="btn btn-operation equals hvr-back-pulse" (click)="ObtenerResultado()">=</button>
         </div>
 
         <div class="col-sm-5">
           <div class="row">
-            <button class="btn btn-func hvr-radial-out" id="clear">x<sup>n</sup></button>
-            <button class="btn btn-func hvr-radial-out" id="square">!</button>
-            <button class="btn btn-func hvr-radial-out" id="sqrt">√</button>
+            <button class="btn btn-func hvr-radial-out" id="pow" (click)="SetPotencia()">x<sup>n</sup></button>
+            <button class="btn btn-func hvr-radial-out" id="fact" (click)="functionName='factorial'">!</button>
+            <button class="btn btn-func hvr-radial-out" id="mode" (click)="SetMode()">{{ modeAlt }}</button>
+            <!-- <button class="btn btn-func hvr-radial-out" id="" data-toggle="modal" data-target=".about-modal">?</button> -->
           </div>
           <div class="row">
-            <button class="btn btn-func hvr-radial-out" id="sen">sen</button>
-            <button class="btn btn-func hvr-radial-out" id="cos">cos</button>
-            <button class="btn btn-func hvr-radial-out" id="tan">tan</button>
+            <button class="btn btn-func hvr-radial-out" id="sen" (click)="functionName='seno'">sen</button>
+            <button class="btn btn-func hvr-radial-out" id="cos" (click)="functionName='coseno'">cos</button>
+            <button class="btn btn-func hvr-radial-out" id="tan" (click)="functionName='tangente'">tan</button>
           </div>
           <div class="row">
-            <button class="btn btn-func hvr-radial-out" id="cot">cot</button>
-            <button class="btn btn-func hvr-radial-out" id="sec">sec</button>
-            <button class="btn btn-func hvr-radial-out" id="csc">csc</button>
+            <button class="btn btn-func hvr-radial-out" id="cot" (click)="functionName='cotangente'">cot</button>
+            <button class="btn btn-func hvr-radial-out" id="sec" (click)="functionName='secante'">sec</button>
+            <button class="btn btn-func hvr-radial-out" id="csc" (click)="functionName='cosecante'">csc</button>
           </div>
           <div class="row">
-            <button class="btn btn-func hvr-radial-out" id="ln">ln</button>
-            <button class="btn btn-func hvr-radial-out" id="log">log<sub>x</sub></button>
-            <button class="btn btn-func hvr-radial-out" id="exp">exp</button>
+            <button class="btn btn-func hvr-radial-out" id="ln" (click)="functionName='ln'">ln</button>
+            <button class="btn btn-func hvr-radial-out" id="log" (click)="SetLogaritmo()">log<sub>x</sub></button>
+            <button class="btn btn-func hvr-radial-out" id="exp" (click)="functionName='exponencial'">exp</button>
           </div>
           <div class="row">
+            <button class="btn btn-func hvr-radial-out" id="binary">bin</button>
             <button class="btn btn-func hvr-radial-out" id=""></button>
-            <button class="btn btn-func hvr-radial-out" id=""></button>
-            <button class="btn btn-func hvr-radial-out" id=""></button>
+            <button class="btn btn-func hvr-radial-out" id="" data-toggle="modal" data-target=".about-modal">?</button>
           </div>
         </div>
 
       </div>
 
+    </div>
+  </div>
+
+  <!-- About modal -->
+  <div class="modal fade about-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Acerca de CalK</h4>
+        </div>
+        <div class="modal-body text-center">
+          <img src="assets/calK-logo.svg" alt="CalK" width="200px"><br><br>
+          <p>CalK es una aplicación cliente en Angular que consume los resultados de CalK-API, la cual es un servidor Haskell con Yesod.</p>
+          <p>Tanto CalK-API como este CalK-Client fueron hechos con <i class="glyphicon glyphicon-heart"></i> por el grupo de Programación Lógica y Funcional del ITCelaya.</p>
+          <img src="http://www.itcelaya.edu.mx/recursos/88591958330484logo%20tecno%20nuevo%20R-05.png" alt="ITCelaya" width="150px">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
     </div>
   </div>

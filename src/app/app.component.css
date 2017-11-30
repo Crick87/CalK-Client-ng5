@@ -43,6 +43,21 @@ a, .btn {
   overflow: hidden;
 }
 
+.displayHelp{
+  margin-top: 70px;
+  background: transparent;
+  border: none;
+  color: #FFF;
+  font-size: 30px;
+  font-weight: 100;
+  padding-right: 50px;
+  padding-bottom: -10px;
+  float: right;
+  display: inline-block;
+  overflow: hidden;
+
+}
+
 .displayFunc {
   background: transparent;
   border: none;
@@ -51,6 +66,13 @@ a, .btn {
   font-weight: 100;
   padding-top: 10px;
   padding-left: 10px;
+}
+
+.displayMode{
+  float: right;
+  padding-top: 10px;
+  padding-right: 15px;
+  font-size: 1.6rem;
 }
 
 .operationSide {
@@ -186,6 +208,11 @@ a, .btn {
   border: 0 !important;
 }
 
+.modal-content{
+  color: #444;
+  font-family: 'Roboto', "Helvetica";
+  font-size: 1.8rem;
+}
 /* MEDIA QUERIES */
 
 @media only screen and (max-width: 768px) {
