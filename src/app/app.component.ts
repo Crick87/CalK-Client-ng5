@@ -147,13 +147,9 @@ export class AppComponent implements OnInit {
         (jsonData) => {
           this.calkService.getResult(this.functionName, this.calkService.resultado).subscribe(
             (jsonData) => {
-              this.calkService.getResult("rad2grad", this.calkService.resultado).subscribe(
-                (jsonData) => {
-                  let displayOld = this.display
-                  this.display = this.calkService.resultado
-                  this.functionName = `${this.functionName}(${displayOld})`
-                }
-              )
+              let displayOld = this.display
+              this.display = this.calkService.resultado
+              this.functionName = `${this.functionName}(${displayOld})`
             }
           )
         }
